@@ -113,7 +113,7 @@ class Schematic{
 					$id = isset($this->blocks[$index]) ? ord($this->blocks[$index]) & 0xff : 0;
 					$data = isset($this->data[$index]) ? ord($this->data[$index]) & 0x0f : 0;
 					$block = BlockFactory::getInstance()->get($id, $data);
-					[$block->getPos()->x, $block->getPos()->y, $block->getPos()->z] = [$x, $y, $z];
+					[$block->getPosition()->x, $block->getPosition()->y, $block->getPosition()->z] = [$x, $y, $z];
 					if($this->materials !== self::MATERIALS_POCKET){
 						$block = $this->fixBlock($block);
 					}
@@ -139,7 +139,7 @@ class Schematic{
 		$this->height = $max->y - $offset->y + 1;
 
 		foreach($blocks as $block){
-			$pos = $block->getPos()->subtractVector($offset);
+			$pos = $block->getPosition()->subtractVector($offset);
 			$index = $this->blockIndex($pos->x, $pos->y, $pos->z);
 			if(strlen($this->blocks) <= $index){
 				$this->blocks .= str_repeat(chr(0), $index - strlen($this->blocks) + 1);
@@ -158,20 +158,20 @@ class Schematic{
 		$min = new Vector3(0, 0, 0);
 		$max = new Vector3(0, 0, 0);
 		foreach($blocks as $block){
-			if($block->getPos()->x < $min->x){
-				$min->x = $block->getPos()->x;
-			}elseif($block->getPos()->x > $max->x){
-				$max->x = $block->getPos()->x;
+			if($block->getPosition()->x < $min->x){
+				$min->x = $block->getPosition()->x;
+			}elseif($block->getPosition()->x > $max->x){
+				$max->x = $block->getPosition()->x;
 			}
-			if($block->getPos()->y < $min->y){
-				$min->y = $block->getPos()->y;
-			}elseif($block->getPos()->y > $max->y){
-				$max->y = $block->getPos()->y;
+			if($block->getPosition()->y < $min->y){
+				$min->y = $block->getPosition()->y;
+			}elseif($block->getPosition()->y > $max->y){
+				$max->y = $block->getPosition()->y;
 			}
-			if($block->getPos()->z < $min->z){
-				$min->z = $block->getPos()->z;
-			}elseif($block->getPos()->z > $max->z){
-				$max->z = $block->getPos()->z;
+			if($block->getPosition()->z < $min->z){
+				$min->z = $block->getPosition()->z;
+			}elseif($block->getPosition()->z > $max->z){
+				$max->z = $block->getPosition()->z;
 			}
 		}
 		$this->height = $max->y - $min->y + 1;
@@ -179,7 +179,7 @@ class Schematic{
 		$this->length = $max->z - $min->z + 1;
 
 		foreach($blocks as $block){
-			$pos = $block->getPos()->subtractVector($min);
+			$pos = $block->getPosition()->subtractVector($min);
 			$index = $this->blockIndex($pos->x, $pos->y, $pos->z);
 			if(strlen($this->blocks) <= $index){
 				$this->blocks .= str_repeat(chr(0), $index - strlen($this->blocks) + 1);
@@ -228,7 +228,7 @@ class Schematic{
 				return $block;
 		}
 		//$new->setComponents($block->x, $block->y, $block->z);
-		[$new->getPos()->x, $new->getPos()->y, $new->getPos()->z] = [$block->getPos()->x, $block->getPos()->y, $block->getPos()->z];
+		[$new->getPosition()->x, $new->getPosition()->y, $new->getPosition()->z] = [$block->getPosition()->x, $block->getPosition()->y, $block->getPosition()->z];
 
 		return $new;
 	}
